@@ -9,27 +9,27 @@ import org.json.JSONObject;
 
 public class Converter {
 
-    public static JSONObject toJson(BookDto libro) {
+    public static JSONObject toJson(BookDto bookDto) {
 
-        JSONObject li = new JSONObject();
+        JSONObject book = new JSONObject();
         JSONObject cat = new JSONObject();
 
         try {
 
-            li.put("id", libro.getId());
-            li.put("nombre", libro.getNombre());
-            li.put("codigo", libro.getCodigo());
-            li.put("cantidad", libro.getCantidad());
-            cat.put("id", libro.getCategoria().getId());
-            cat.put("nombre", libro.getCategoria().getNombre());
-            li.put("categoria", cat);
+            book.put("id", bookDto.getId());
+            book.put("nombre", bookDto.getName());
+            book.put("codigo", bookDto.getCod());
+            book.put("cantidad", bookDto.getCant());
+            cat.put("id", bookDto.getCatDto().getId());
+            cat.put("nombre", bookDto.getCatDto().getName());
+            book.put("categoria", cat);
 
 
         } catch (JSONException j) {
             j.printStackTrace();
         }
 
-        return li;
+        return book;
 
     }
 
@@ -40,12 +40,12 @@ public class Converter {
 
         try {
             li.setId(jsonLibro.getInt("id"));
-            li.setNombre(jsonLibro.getString("nombre"));
-            li.setCodigo(jsonLibro.getString("codigo"));
-            li.setCantidad(Integer.parseInt(jsonLibro.getString("cantidad")));
+            li.setName(jsonLibro.getString("nombre"));
+            li.setCod(jsonLibro.getString("codigo"));
+            li.setCant(Integer.parseInt(jsonLibro.getString("cantidad")));
             JSONObject value = jsonLibro.getJSONObject("categoria");
             cat = Converter.toCategoria(value);
-            li.setCategoria(cat);
+            li.setCatDto(cat);
         } catch (Exception j) {
             j.printStackTrace();
         }
@@ -57,7 +57,7 @@ public class Converter {
         CatDto cat = new CatDto();
         try{
             cat.setId(jsonCategoria.getInt("id"));
-            cat.setNombre(jsonCategoria.getString("nombre"));
+            cat.setName(jsonCategoria.getString("nombre"));
         } catch (Exception j) {
             j.printStackTrace();
         }

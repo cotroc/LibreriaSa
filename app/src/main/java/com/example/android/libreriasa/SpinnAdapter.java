@@ -45,7 +45,7 @@ public class SpinnAdapter extends ArrayAdapter<CatDto> {
         label.setTextColor(Color.BLACK);
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (User class)
-        label.setText(values[position].getNombre());
+        label.setText(values[position].getName());
 
         // And finally return your dynamic (or custom) view for each spinner item
         return label;
@@ -58,7 +58,7 @@ public class SpinnAdapter extends ArrayAdapter<CatDto> {
                                 ViewGroup parent) {
         TextView label = new TextView(context);
         label.setTextColor(Color.BLACK);
-        label.setText(values[position].getNombre());
+        label.setText(values[position].getName());
 
         return label;
     }

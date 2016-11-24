@@ -30,7 +30,7 @@ public class AsyncRestClient extends AsyncTask<Bundle, Void, Bundle> {
                 Log.i(TAG, "Iniciando llamada al servidor para: " + flag + listar);
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
                 salida.putString("flag", "lista" + listar);
-                salida.putParcelableArrayList("lista" + listar, httpUrlConnectionClient.getListas(params[0].getString("url"), listar));
+                salida.putParcelableArrayList("lista" + listar, httpUrlConnectionClient.getBookList(params[0].getString("url"), listar));
                 break;
             case "insertar":
 
@@ -42,7 +42,7 @@ public class AsyncRestClient extends AsyncTask<Bundle, Void, Bundle> {
             case "buscar":
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
                 salida.putString("flag", "buscar");
-                salida.putString("book", httpUrlConnectionClient.getLibro(params[0].getString("url")));
+                salida.putString("book", httpUrlConnectionClient.getBook(params[0].getString("url")));
                 break;
 
             case "editar":

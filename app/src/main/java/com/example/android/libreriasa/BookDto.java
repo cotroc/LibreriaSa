@@ -7,10 +7,10 @@ package com.example.android.libreriasa;
 public class BookDto {
 
     private int id;
-    private String nombre;
-    private String codigo;
-    private int cantidad;
-    private CatDto categoria;
+    private String name;
+    private String cod;
+    private int cant;
+    private CatDto catDto;
 
     public int getId() {
         return id;
@@ -20,46 +20,46 @@ public class BookDto {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getCod() {
+        return cod;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getCant() {
+        return cant;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setCant(int cant) {
+        this.cant = cant;
     }
 
-    public CatDto getCategoria() {
-        return categoria;
+    public CatDto getCatDto() {
+        return catDto;
     }
 
-    public void setCategoria(CatDto categoria) {
-        this.categoria = categoria;
+    public void setCatDto(CatDto catDto) {
+        this.catDto = catDto;
     }
 
     @Override
     public String toString() {
         return "{" +
                 "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", codigo='" + codigo + '\'' +
-                ", cantidad=" + cantidad + '\'' +
-                ", categoria='" + categoria  + '\'' +
+                ", nombre='" + name + '\'' +
+                ", codigo='" + cod + '\'' +
+                ", cantidad=" + cant + '\'' +
+                ", categoria='" + catDto + '\'' +
                 '}';
     }
 

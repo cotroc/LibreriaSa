@@ -20,15 +20,16 @@ import java.util.ArrayList;
 
 public class HttpUrlConnectionClient {
 
-    public static final String GET = "GET";
-    public static final String POST = "POST";
-    public static final String PUT = "PUT";
+    private static final String GET = "GET";
+    private static final String POST = "POST";
+    private static final String PUT = "PUT";
+    private static final String DELETE = "DELETE";
     private static final String TAG = "HttpUrlConnectionClient";
 
-    public ArrayList getListas(String urlServer, String s) {
+    public ArrayList getBookList(String urlServer, String s) {
         URL url;
 
-        ArrayList lista = new ArrayList();
+        ArrayList bookList = new ArrayList();
 
         try {
             url = new URL(urlServer);
@@ -46,7 +47,7 @@ public class HttpUrlConnectionClient {
                     for (int i = 0; i < jsonResu.length(); i++) {
                         JSONObject jsonObject = jsonResu.getJSONObject(i);
                         bookDto = Converter.toLibro(jsonObject);
-                        lista.add(bookDto);
+                        bookList.add(bookDto);
                     }
                 }
                 else {
@@ -55,7 +56,7 @@ public class HttpUrlConnectionClient {
                         for(int i = 0; i < jsonResu.length(); i++) {
                             JSONObject jsonObject = jsonResu.getJSONObject(i);
                             catDto = Converter.toCategoria(jsonObject);
-                            lista.add(catDto);
+                            bookList.add(catDto);
                         }
                     }
                 }
@@ -66,10 +67,10 @@ public class HttpUrlConnectionClient {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return lista;
+        return bookList;
     }
 
-    public String getLibro(String urlServer) {
+    public String getBook(String urlServer) {
         String libro = "";
         URL url;
 
@@ -81,14 +82,9 @@ public class HttpUrlConnectionClient {
             String inputLine;
 
             while (null != (inputLine = in.readLine())){
-                JSONObject jsonLibro = new JSONObject(inputLine);
-                //book = jsonLibro.toString();
                 libro = inputLine;
-
             }
         } catch(IOException e) {
-            e.printStackTrace();
-        } catch(JSONException e) {
             e.printStackTrace();
         }
         return libro;
@@ -125,7 +121,7 @@ public class HttpUrlConnectionClient {
 
         try{
 
-            //JSONObject jsonLibro = new JSONObject(this.getLibro(urlServer));
+            //JSONObject jsonLibro = new JSONObject(this.getBook(urlServer));
 
             URL url = new URL(urlServer);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -157,9 +153,8 @@ public class HttpUrlConnectionClient {
         try {
             URL url = new URL(urlServer);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
-            httpURLConnection.setRequestMethod("DELETE");
+            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            httpURLConnection.setRequestMethod(DELETE);
             result.append(httpURLConnection.getResponseCode());
         } catch (IOException exception) {
             exception.printStackTrace();

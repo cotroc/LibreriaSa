@@ -65,7 +65,8 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
     public void findById(View v) {
         AsyncRestClient asyncBuscar = new AsyncRestClient(this);
         Bundle b = new Bundle();
-        String url = HTTP + ip + BOOK + Integer.parseInt(etId.getText().toString());
+        String url = HTTP + ip + BOOK +
+                Integer.parseInt(etId.getText().toString());
         b.putString("flag0", "buscar");
         b.putString("url", url);
         asyncBuscar.execute(b);
@@ -78,7 +79,8 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
 
     public void bookEdit(View v) {
 
-        this.bookEditInsert(v, "editar", Integer.parseInt(etId.getText().toString()));
+        this.bookEditInsert(v, "editar",
+                Integer.parseInt(etId.getText().toString()));
     }
 
     public void bookEditInsert(View v, String flag, Integer id){
@@ -96,7 +98,8 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
     public void bookDelete(View v) {
         AsyncRestClient asyncEliminarLibro = new AsyncRestClient(this);
         Bundle entrada = new Bundle();
-        String url = HTTP + ip + BOOK + Integer.parseInt(etId.getText().toString());
+        String url = HTTP + ip + BOOK +
+                Integer.parseInt(etId.getText().toString());
         entrada.putString("flag0", "eliminar");
         entrada.putString("url", url);
         asyncEliminarLibro.execute(entrada);
@@ -104,10 +107,10 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
 
     public BookDto book() {
         bookDto = new BookDto();
-        bookDto.setNombre(etName.getText().toString());
-        bookDto.setCantidad(Integer.parseInt(etCant.getText().toString()));
-        bookDto.setCodigo(etCode.getText().toString());
-        bookDto.setCategoria(catDto);
+        bookDto.setName(etName.getText().toString());
+        bookDto.setCant(Integer.parseInt(etCant.getText().toString()));
+        bookDto.setCod(etCode.getText().toString());
+        bookDto.setCatDto(catDto);
         return bookDto;
     }
 
@@ -130,20 +133,18 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
                 try {
                     JSONObject jsonLibro = new JSONObject(output.getString("book"));
                     BookDto libro = Converter.toLibro(jsonLibro);
-                    if(libro.getNombre() == null) {
+                    if(libro.getName() == null) {
                         Toast.makeText(this, "No existe el Libro", Toast.LENGTH_SHORT).show();
                     } else {
-                        etName.setText(libro.getNombre());
-                        etCant.setText(Integer.toString(libro.getCantidad()));
-                        etCode.setText(libro.getCodigo());
+                        etName.setText(libro.getName());
+                        etCant.setText(Integer.toString(libro.getCant()));
+                        etCode.setText(libro.getCod());
                         etId.setText(Integer.toString(libro.getId()));
-                        spnCat.setSelection(libro.getCategoria().getId()-1);
+                        spnCat.setSelection(libro.getCatDto().getId()-1);
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                     break;
 
             case "listaCat":
@@ -166,8 +167,7 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
                         CatDto catDto = adapter.getItem(position);
                         BookCrudActivity.this.catDto = new CatDto();
                         BookCrudActivity.this.catDto.setId(catDto.getId());
-                        BookCrudActivity.this.catDto.setNombre(catDto.getNombre());
-
+                        BookCrudActivity.this.catDto.setName(catDto.getName());
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> adapter) {  }
@@ -179,14 +179,6 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
                 toast.show();
                 this.limpiar();
                 break;
-
-            /*case "eliminar":
-
-                toast = Toast.makeText(this, salida.getString("resultado"), Toast.LENGTH_SHORT);
-                toast.show();
-                this.limpiar();
-                break;*/
-
         }
     }
 }

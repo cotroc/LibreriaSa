@@ -48,14 +48,14 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
             ArrayList results = b.getStringArrayList("listaLibros");
             for(int i = 0; i < results.size(); i ++) {
                 libro = (BookDto)results.get(i);
-                resu.add("ID: "+ libro.getId() + "\n Nombre: " + libro.getNombre() + "\n Codigo: " + libro.getCodigo() + "\n Cantidad: " + libro.getCantidad() + "\n\n");
+                resu.add("ID: "+ libro.getId() + "\n Nombre: " + libro.getName() + "\n Codigo: " + libro.getCod() + "\n Cantidad: " + libro.getCant() + "\n\n");
 
             }
         } if(flag.matches("buscar")) {
             try {
                JSONObject jsonLibro = new JSONObject(b.getString("book"));
                 libro = Converter.toLibro(jsonLibro);
-                resu.add("Nombre: " + libro.getNombre() + " Codigo: " + libro.getCodigo() + " Cantidad: " + libro.getCantidad());
+                resu.add("Nombre: " + libro.getName() + " Codigo: " + libro.getCod() + " Cantidad: " + libro.getCant());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

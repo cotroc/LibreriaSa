@@ -24,7 +24,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
-            android:onClick="listarActivity"
+            android:onClick="listActivity"
             android:text="Listar" />
 
         <Button
@@ -32,32 +32,8 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:onClick="insertarActivity"
-            android:text="Nuevo" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnEdit"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:onClick="editarActivity"
-            android:text="Editar" />
-
-        <Button
-            android:id="@+id/btnDel"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:onClick="borrarActivity"
-            android:text="Borrar" />
+            android:onClick="BookCrudActivity"
+            android:text="ABM Libro" />
 
     </LinearLayout>
 

@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnListar, btnNuevo, btnEditar, btnBorrar, btnConfig, btnSalir;
+    private Button btnList, btnNew, btnConfig, btnQuit;
     private ConfigSQLite configSQLite;
     private String ip;
     private static final String TAG = "PrincipalActivity";
@@ -24,22 +24,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
-        btnListar = (Button) findViewById(R.id.btnList);
-        btnNuevo = (Button) findViewById(R.id.btnNew);
-        btnEditar = (Button) findViewById(R.id.btnEdit);
-        btnBorrar = (Button) findViewById(R.id.btnDel);
+        btnList = (Button) findViewById(R.id.btnList);
+        btnNew = (Button) findViewById(R.id.btnNew);
         btnConfig = (Button) findViewById(R.id.btnConfig);
-        btnSalir = (Button) findViewById(R.id.btnQuit);
+        btnQuit = (Button) findViewById(R.id.btnQuit);
         ip = this.getIp();
     }
 
-    public void listarActivity(View v) {
+    public void listActivity(View v) {
         intent = new Intent(this, ListActivity.class);
         intent.putExtra("ip", ip);
         startActivity(intent);
     }
 
-    public void insertarActivity(View v) {
+    public void BookCrudActivity(View v) {
         intent = new Intent(this, BookCrudActivity.class);
         intent.putExtra("ip", ip);
         startActivity(intent);

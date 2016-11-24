@@ -38,35 +38,6 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
         this.initComponents();
     }
 
-    @Override
-    public void update(Bundle b) {
-        String flag = b.getString("flag");
-        BookDto libro;
-        ArrayList resu = new ArrayList();
-
-        if(flag.matches("listaLibros")) {
-            ArrayList results = b.getStringArrayList("listaLibros");
-            for(int i = 0; i < results.size(); i ++) {
-                libro = (BookDto)results.get(i);
-                resu.add("ID: "+ libro.getId() + "\n Nombre: " + libro.getName() + "\n Codigo: " + libro.getCod() + "\n Cantidad: " + libro.getCant() + "\n\n");
-
-            }
-        } if(flag.matches("buscar")) {
-            try {
-               JSONObject jsonLibro = new JSONObject(b.getString("book"));
-                libro = Converter.toLibro(jsonLibro);
-                resu.add("Nombre: " + libro.getName() + " Codigo: " + libro.getCod() + " Cantidad: " + libro.getCant());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        Adapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, resu);
-        listaLibros.setAdapter((ListAdapter) adaptador);
-
-
-
-    }
-
     public void listarLibros(View v) {
         Log.i(TAG, "Enviando peticion");
         Bundle b = new Bundle();
@@ -90,5 +61,31 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
         listaLibros = (GridView) findViewById(R.id.listaLibros);
         listar = (Button) findViewById(R.id.btnList);
         etBuscar = (EditText) findViewById(R.id.etBuscar);
+    }
+
+    @Override
+    public void update(Bundle b) {
+        String flag = b.getString("flag");
+        BookDto libro;
+        ArrayList resu = new ArrayList();
+
+        if(flag.matches("listaLibros")) {
+            ArrayList results = b.getStringArrayList("listaLibros");
+            for(int i = 0; i < results.size(); i ++) {
+                libro = (BookDto)results.get(i);
+                resu.add("ID: "+ libro.getId() + "\n Nombre: " + libro.getName() + "\n Codigo: " + libro.getCod() + "\n Cantidad: " + libro.getCant() + "\n\n");
+
+            }
+        } if(flag.matches("buscar")) {
+            try {
+                JSONObject jsonLibro = new JSONObject(b.getString("book"));
+                libro = Converter.toLibro(jsonLibro);
+                resu.add("Nombre: " + libro.getName() + " Codigo: " + libro.getCod() + " Cantidad: " + libro.getCant());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Adapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, resu);
+        listaLibros.setAdapter((ListAdapter) adaptador);
     }
 }

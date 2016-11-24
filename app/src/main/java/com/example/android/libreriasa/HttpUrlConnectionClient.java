@@ -71,7 +71,7 @@ public class HttpUrlConnectionClient {
     }
 
     public String getBook(String urlServer) {
-        String libro = "";
+        String book = "";
         URL url;
 
         try{
@@ -82,12 +82,12 @@ public class HttpUrlConnectionClient {
             String inputLine;
 
             while (null != (inputLine = in.readLine())){
-                libro = inputLine;
+                book = inputLine;
             }
         } catch(IOException e) {
             e.printStackTrace();
         }
-        return libro;
+        return book;
     }
 
     public String sendPost(String urlServer, String args) {
@@ -120,12 +120,8 @@ public class HttpUrlConnectionClient {
         String inputLine;
 
         try{
-
-            //JSONObject jsonLibro = new JSONObject(this.getBook(urlServer));
-
             URL url = new URL(urlServer);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            //httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod(PUT);
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpURLConnection.setRequestProperty("charset", "utf-8");
@@ -140,15 +136,11 @@ public class HttpUrlConnectionClient {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }/* catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
+        }
         return result.toString();
     }
 
     public String sendDelete(String urlServer){
-
         StringBuffer result = new StringBuffer();
         try {
             URL url = new URL(urlServer);

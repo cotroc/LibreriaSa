@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class Converter {
 
-    public static JSONObject toJson(RestDataLibroDto libro) {
+    public static JSONObject toJson(BookDto libro) {
 
         JSONObject li = new JSONObject();
         JSONObject cat = new JSONObject();
@@ -33,10 +33,10 @@ public class Converter {
 
     }
 
-    public static RestDataLibroDto toLibro(JSONObject jsonLibro) {
+    public static BookDto toLibro(JSONObject jsonLibro) {
 
-        RestDataLibroDto li = new RestDataLibroDto();
-        RestDataCatDto cat;
+        BookDto li = new BookDto();
+        CatDto cat;
 
         try {
             li.setId(jsonLibro.getInt("id"));
@@ -53,8 +53,8 @@ public class Converter {
         return li;
     }
 
-    public static RestDataCatDto toCategoria(JSONObject jsonCategoria) {
-        RestDataCatDto cat = new RestDataCatDto();
+    public static CatDto toCategoria(JSONObject jsonCategoria) {
+        CatDto cat = new CatDto();
         try{
             cat.setId(jsonCategoria.getInt("id"));
             cat.setNombre(jsonCategoria.getString("nombre"));

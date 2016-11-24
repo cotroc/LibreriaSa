@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.android.libreriasa.ListarActivity">
+    tools:context="com.example.android.libreriasa.ListActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnListar"
+            android:id="@+id/btnList"
             android:text="Listar / Buscar"
             android:onClick="listarLibros"/>
 

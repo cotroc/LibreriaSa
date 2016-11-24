@@ -4,7 +4,7 @@ package com.example.android.libreriasa;
  * Created by Cotroc on 11/12/16.
  */
 
-public class RestDataCatDto {
+public class CatDto {
 
     private int id;
     private String nombre;

@@ -13,38 +13,41 @@ public class MainActivity extends AppCompatActivity {
     private ConfigSQLite configSQLite;
     private String ip;
     private static final String TAG = "PrincipalActivity";
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initComponents();
     }
 
     private void initComponents() {
-        btnListar = (Button) findViewById(R.id.btnListar);
-        btnNuevo = (Button) findViewById(R.id.btnNuevo);
-        btnEditar = (Button) findViewById(R.id.btnEditar);
-        btnBorrar = (Button) findViewById(R.id.btnBorrar);
+        btnListar = (Button) findViewById(R.id.btnList);
+        btnNuevo = (Button) findViewById(R.id.btnNew);
+        btnEditar = (Button) findViewById(R.id.btnEdit);
+        btnBorrar = (Button) findViewById(R.id.btnDel);
         btnConfig = (Button) findViewById(R.id.btnConfig);
-        btnSalir = (Button) findViewById(R.id.btnSalir);
+        btnSalir = (Button) findViewById(R.id.btnQuit);
         ip = this.getIp();
     }
 
     public void listarActivity(View v) {
-        Intent listar = new Intent(this, ListarActivity.class);
-        startActivity(listar);
+        intent = new Intent(this, ListActivity.class);
+        intent.putExtra("ip", ip);
+        startActivity(intent);
     }
 
     public void insertarActivity(View v) {
-        Intent insertar = new Intent(MainActivity.this, InsertarActivity.class);
-        insertar.putExtra("ip", ip);
-        startActivity(insertar);
+        intent = new Intent(this, BookCrudActivity.class);
+        intent.putExtra("ip", ip);
+        startActivity(intent);
     }
 
     public void configActivity(View v) {
-        Intent Config = new Intent(this, ConfigActivity.class);
-        startActivity(Config);
+        intent = new Intent(this, ConfigActivity.class);
+        startActivity(intent);
     }
 
     public String getIp() {

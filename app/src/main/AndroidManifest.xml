@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ConfigActivity" />
-        <activity android:name=".ListarActivity" />
-        <activity android:name=".InsertarActivity" />
+        <activity android:name=".ListActivity" />
+        <activity android:name=".BookCrudActivity" />
         <activity android:name=".BookListActivity"></activity>
     </application>
 

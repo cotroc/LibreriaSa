@@ -11,13 +11,13 @@ import android.widget.TextView;
  * Created by Cotroc on 11/14/16.
  */
 
-public class SpinnAdapter extends ArrayAdapter<RestDataCatDto> {
+public class SpinnAdapter extends ArrayAdapter<CatDto> {
 
     private Context context;
-    private RestDataCatDto[] values;
+    private CatDto[] values;
 
     public SpinnAdapter(Context context, int textViewResourceId,
-                       RestDataCatDto[] values) {
+                       CatDto[] values) {
         super(context, textViewResourceId, values);
         this.context = context;
         this.values = values;
@@ -27,7 +27,7 @@ public class SpinnAdapter extends ArrayAdapter<RestDataCatDto> {
         return values.length;
     }
 
-    public RestDataCatDto getItem(int position){
+    public CatDto getItem(int position){
         return values[position];
     }
 

@@ -36,21 +36,20 @@ public class AsyncRestClient extends AsyncTask<Bundle, Void, Bundle> {
 
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
                 salida.putString("flag", "insertado");
-                salida.putString("resultado", httpUrlConnectionClient.sendPost(params[0].getString("url"), params[0].getString("libro")));
+                salida.putString("resultado", httpUrlConnectionClient.sendPost(params[0].getString("url"), params[0].getString("book")));
                 break;
 
             case "buscar":
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
                 salida.putString("flag", "buscar");
-                salida.putString("libro", httpUrlConnectionClient.getLibro(params[0].getString("url")));
+                salida.putString("book", httpUrlConnectionClient.getLibro(params[0].getString("url")));
                 break;
 
             case "editar":
 
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
                 salida.putString("flag", "insertado");
-
-                salida.putString("resultado", httpUrlConnectionClient.sendUpdate(params[0].getString("url"), params[0].getString("libro")));
+                salida.putString("resultado", httpUrlConnectionClient.sendUpdate(params[0].getString("url"), params[0].getString("book")));
                 break;
 
             case "eliminar":

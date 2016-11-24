@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.example.android.libreriasa.InsertarActivity">
+    tools:context="com.example.android.libreriasa.BookCrudActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -125,28 +125,28 @@
             android:id="@+id/btnInsertar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="insertarLibro"
+            android:onClick="bookInsert"
             android:text="Aceptar:"/>
 
         <Button
             android:id="@+id/btnBuscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="buscarPorId"
+            android:onClick="findById"
             android:text="Buscar"/>
 
         <Button
-            android:id="@+id/btnEditar"
+            android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="editarLibro"
+            android:onClick="bookEdit"
             android:text="Editar:"/>
 
         <Button
-            android:id="@+id/btnBorrar"
+            android:id="@+id/btnDel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="eliminarLibro"
+            android:onClick="bookDelete"
             android:text="Borrar"/>
 
     </LinearLayout>

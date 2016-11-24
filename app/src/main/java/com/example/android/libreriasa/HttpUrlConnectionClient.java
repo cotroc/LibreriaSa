@@ -42,25 +42,23 @@ public class HttpUrlConnectionClient {
                 JSONArray jsonResu = new JSONArray(inputLine);
 
                 if(s == "Libros") {
-                    RestDataLibroDto restDataLiDto;
+                    BookDto bookDto;
                     for (int i = 0; i < jsonResu.length(); i++) {
                         JSONObject jsonObject = jsonResu.getJSONObject(i);
-                        restDataLiDto = Converter.toLibro(jsonObject);
-                        lista.add(restDataLiDto);
+                        bookDto = Converter.toLibro(jsonObject);
+                        lista.add(bookDto);
                     }
                 }
                 else {
                     if(s == "Cat"){
-                        RestDataCatDto restDataCatDto;
+                        CatDto catDto;
                         for(int i = 0; i < jsonResu.length(); i++) {
                             JSONObject jsonObject = jsonResu.getJSONObject(i);
-                            restDataCatDto = Converter.toCategoria(jsonObject);
-                            lista.add(restDataCatDto);
+                            catDto = Converter.toCategoria(jsonObject);
+                            lista.add(catDto);
                         }
                     }
                 }
-
-
             }
             in.close();
         } catch (IOException e) {
@@ -84,7 +82,7 @@ public class HttpUrlConnectionClient {
 
             while (null != (inputLine = in.readLine())){
                 JSONObject jsonLibro = new JSONObject(inputLine);
-                //libro = jsonLibro.toString();
+                //book = jsonLibro.toString();
                 libro = inputLine;
 
             }
@@ -95,17 +93,7 @@ public class HttpUrlConnectionClient {
         }
         return libro;
     }
-    /*Ejemplo de llamada:
-    JSONObject jsonObject=new JSONObject();
-        try {
-            jsonObject.put("id","15");
-            jsonObject.put("nombre","Marc");
-            jsonObject.put("email","marc@test.com");
-            jsonObject.put("edad","47");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        httpUrlConnectionClient.sendPost("http://192.168.1.46:8080/v1/libro/",jsonObject.toString());*/
+
     public String sendPost(String urlServer, String args) {
         StringBuffer result = new StringBuffer();
         String inputLine;
@@ -142,7 +130,7 @@ public class HttpUrlConnectionClient {
             URL url = new URL(urlServer);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             //httpURLConnection.setDoOutput(true);
-            httpURLConnection.setRequestMethod("PUT");
+            httpURLConnection.setRequestMethod(PUT);
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpURLConnection.setRequestProperty("charset", "utf-8");
             OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
@@ -153,7 +141,6 @@ public class HttpUrlConnectionClient {
                 result.append(inputLine);
             }
             in.close();
-
 
         } catch (IOException e) {
             e.printStackTrace();

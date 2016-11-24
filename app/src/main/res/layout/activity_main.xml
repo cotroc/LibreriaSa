@@ -20,7 +20,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnListar"
+            android:id="@+id/btnList"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
@@ -28,7 +28,7 @@
             android:text="Listar" />
 
         <Button
-            android:id="@+id/btnNuevo"
+            android:id="@+id/btnNew"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -44,7 +44,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnEditar"
+            android:id="@+id/btnEdit"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
@@ -52,7 +52,7 @@
             android:text="Editar" />
 
         <Button
-            android:id="@+id/btnBorrar"
+            android:id="@+id/btnDel"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -76,7 +76,7 @@
             android:text="Configurar" />
 
         <Button
-            android:id="@+id/btnSalir"
+            android:id="@+id/btnQuit"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"

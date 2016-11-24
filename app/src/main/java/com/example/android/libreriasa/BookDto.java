@@ -4,13 +4,13 @@ package com.example.android.libreriasa;
  * Created by Cotroc on 11/8/16.
  */
 
-public class RestDataLibroDto {
+public class BookDto {
 
     private int id;
     private String nombre;
     private String codigo;
     private int cantidad;
-    private RestDataCatDto categoria;
+    private CatDto categoria;
 
     public int getId() {
         return id;
@@ -44,11 +44,11 @@ public class RestDataLibroDto {
         this.cantidad = cantidad;
     }
 
-    public RestDataCatDto getCategoria() {
+    public CatDto getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(RestDataCatDto categoria) {
+    public void setCategoria(CatDto categoria) {
         this.categoria = categoria;
     }
 

@@ -15,18 +15,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class InsertarActivity extends AppCompatActivity implements SimpleUpdatableActivity{
+public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatableActivity{
 
-    private EditText etNombre, etCodigo, etCantidad, etId;
-    private Button btnInsertar, btnBuscar, btnEditar, btnBorrar;
+    private EditText etName, etCode, etCant, etId;
+    private Button btnInsert, btnSearch, btnEdit, btnDel;
     private SpinnAdapter adapter;
     private Spinner spnCat;
     private String ip;
     private final static String HTTP = "http://";
-    private final static String LIBRO = "/v1/libro/";
+    private final static String BOOK = "/v1/libro/";
     private final static String CAT = "/v1/categoria/";
-    private RestDataCatDto categoria;
-    private RestDataLibroDto libro;
+    private CatDto catDto;
+    private BookDto bookDto;
 
 
     @Override
@@ -39,19 +39,19 @@ public class InsertarActivity extends AppCompatActivity implements SimpleUpdatab
     }
 
     private void initComponents() {
-        etNombre = (EditText) findViewById(R.id.etNombre);
-        etCodigo = (EditText) findViewById(R.id.etCodigo);
-        etCantidad = (EditText) findViewById(R.id.etCantidad);
+        etName = (EditText) findViewById(R.id.etNombre);
+        etCode = (EditText) findViewById(R.id.etCodigo);
+        etCant = (EditText) findViewById(R.id.etCantidad);
         etId = (EditText) findViewById(R.id.etId);
-        btnInsertar = (Button) findViewById(R.id.btnInsertar);
-        btnBuscar = (Button) findViewById(R.id.btnBuscar);
-        btnEditar = (Button) findViewById(R.id.btnEditar);
-        btnBorrar = (Button) findViewById(R.id.btnBorrar);
+        btnInsert = (Button) findViewById(R.id.btnInsertar);
+        btnSearch = (Button) findViewById(R.id.btnBuscar);
+        btnEdit = (Button) findViewById(R.id.btnEdit);
+        btnDel = (Button) findViewById(R.id.btnDel);
         spnCat = (Spinner) findViewById(R.id.spnCat);
-        this.getCategoria();
+        this.getCat();
     }
 
-    private void getCategoria() {
+    private void getCat() {
         AsyncRestClient asyncGetCategoria = new AsyncRestClient(this);
         Bundle entrada = new Bundle();
         String url = HTTP + ip + CAT;
@@ -62,81 +62,80 @@ public class InsertarActivity extends AppCompatActivity implements SimpleUpdatab
 
     }
 
-    public void buscarPorId(View v) {
+    public void findById(View v) {
         AsyncRestClient asyncBuscar = new AsyncRestClient(this);
         Bundle b = new Bundle();
-        String url = HTTP + ip + LIBRO + Integer.parseInt(etId.getText().toString());
+        String url = HTTP + ip + BOOK + Integer.parseInt(etId.getText().toString());
         b.putString("flag0", "buscar");
         b.putString("url", url);
         asyncBuscar.execute(b);
     }
 
-    public void insertarLibro(View v) {
+    public void bookInsert(View v) {
 
-        this.editInsertBook(v, "insertar", 0);
+        this.bookEditInsert(v, "insertar", 0);
     }
 
-    public void editarLibro(View v) {
+    public void bookEdit(View v) {
 
-        this.editInsertBook(v, "editar", Integer.parseInt(etId.getText().toString()));
+        this.bookEditInsert(v, "editar", Integer.parseInt(etId.getText().toString()));
     }
 
-    public void editInsertBook(View v, String flag, Integer id){
+    public void bookEditInsert(View v, String flag, Integer id){
         AsyncRestClient asyncEditarLibro = new AsyncRestClient(this);
         Bundle entrada = new Bundle();
-        String url = HTTP + ip + LIBRO;
-        libro = this.libro();
-        libro.setId(id);
+        String url = HTTP + ip + BOOK;
+        bookDto = this.book();
+        bookDto.setId(id);
         entrada.putString("flag0", flag);
         entrada.putString("url", url);
-        entrada.putString("libro", Converter.toJson(libro).toString());
+        entrada.putString("book", Converter.toJson(bookDto).toString());
         asyncEditarLibro.execute(entrada);
     }
 
-    public void eliminarLibro(View v) {
+    public void bookDelete(View v) {
         AsyncRestClient asyncEliminarLibro = new AsyncRestClient(this);
         Bundle entrada = new Bundle();
-        String url = HTTP + ip + LIBRO + Integer.parseInt(etId.getText().toString());
+        String url = HTTP + ip + BOOK + Integer.parseInt(etId.getText().toString());
         entrada.putString("flag0", "eliminar");
         entrada.putString("url", url);
         asyncEliminarLibro.execute(entrada);
     }
 
-    public RestDataLibroDto libro() {
-        libro = new RestDataLibroDto();
-        libro.setId(0);
-        libro.setNombre(etNombre.getText().toString());
-        libro.setCantidad(Integer.parseInt(etCantidad.getText().toString()));
-        libro.setCodigo(etCodigo.getText().toString());
-        libro.setCategoria(categoria);
-        return libro;
+    public BookDto book() {
+        bookDto = new BookDto();
+        bookDto.setNombre(etName.getText().toString());
+        bookDto.setCantidad(Integer.parseInt(etCant.getText().toString()));
+        bookDto.setCodigo(etCode.getText().toString());
+        bookDto.setCategoria(catDto);
+        return bookDto;
     }
 
     public void limpiar() {
-        etNombre.setText("");
-        etCodigo.setText("");
-        etCantidad.setText("");
+        etName.setText("");
+        etCode.setText("");
+        etCant.setText("");
         etId.setText("");
         spnCat.setSelection(0);
     }
 
     @Override
-    public void update(Bundle salida) {
+    public void update(Bundle output) {
         Toast toast;
-        String flag = salida.getString("flag");
+        String flag = output.getString("flag");
         switch(flag) {
 
             case "buscar":
 
                 try {
-                    JSONObject jsonLibro = new JSONObject(salida.getString("libro"));
-                    RestDataLibroDto libro = Converter.toLibro(jsonLibro);
+                    JSONObject jsonLibro = new JSONObject(output.getString("book"));
+                    BookDto libro = Converter.toLibro(jsonLibro);
                     if(libro.getNombre() == null) {
                         Toast.makeText(this, "No existe el Libro", Toast.LENGTH_SHORT).show();
                     } else {
-                        etNombre.setText(libro.getNombre());
-                        etCantidad.setText(Integer.toString(libro.getCantidad()));
-                        etCodigo.setText(libro.getCodigo());
+                        etName.setText(libro.getNombre());
+                        etCant.setText(Integer.toString(libro.getCantidad()));
+                        etCode.setText(libro.getCodigo());
                         etId.setText(Integer.toString(libro.getId()));
                         spnCat.setSelection(libro.getCategoria().getId()-1);
                     }
@@ -149,11 +148,11 @@ public class InsertarActivity extends AppCompatActivity implements SimpleUpdatab
 
             case "listaCat":
 
-                ArrayList cat = salida.getStringArrayList("listaCat");
+                ArrayList cat = output.getStringArrayList("listaCat");
                 int size = cat.size();
-                final RestDataCatDto[] lCat = new RestDataCatDto[size];
+                final CatDto[] lCat = new CatDto[size];
                 for(int i = 0; i < cat.size(); i++) {
-                    RestDataCatDto cate = (RestDataCatDto) cat.get(i);
+                    CatDto cate = (CatDto) cat.get(i);
                     lCat[i] = cate;
                 }
                 adapter = new SpinnAdapter(this, android.R.layout.simple_spinner_item, lCat);
@@ -164,10 +163,10 @@ public class InsertarActivity extends AppCompatActivity implements SimpleUpdatab
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view,
                                                int position, long id) {
-                        RestDataCatDto catDto = adapter.getItem(position);
-                        categoria = new RestDataCatDto();
-                        categoria.setId(catDto.getId());
-                        categoria.setNombre(catDto.getNombre());
+                        CatDto catDto = adapter.getItem(position);
+                        BookCrudActivity.this.catDto = new CatDto();
+                        BookCrudActivity.this.catDto.setId(catDto.getId());
+                        BookCrudActivity.this.catDto.setNombre(catDto.getNombre());
 
                     }
                     @Override
@@ -176,7 +175,7 @@ public class InsertarActivity extends AppCompatActivity implements SimpleUpdatab
                 break;
             case "insertado": case "eliminar":
 
-                toast = Toast.makeText(this, salida.getString("resultado"), Toast.LENGTH_SHORT);
+                toast = Toast.makeText(this, output.getString("resultado"), Toast.LENGTH_SHORT);
                 toast.show();
                 this.limpiar();
                 break;

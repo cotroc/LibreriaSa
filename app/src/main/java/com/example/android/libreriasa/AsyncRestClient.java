@@ -8,7 +8,7 @@ import android.util.Log;
  * Created by Cotroc on 11/8/16.
  */
 
-public class AsyncRestClient extends AsyncTask<Bundle, Void, Bundle> {
+public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
 
     private SimpleUpdatableActivity simpleUpdatableActivity;
     private static final String TAG = "AsyncRestClient";
@@ -31,6 +31,7 @@ public class AsyncRestClient extends AsyncTask<Bundle, Void, Bundle> {
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
                 salida.putString("flag", "lista" + listar);
                 salida.putParcelableArrayList("lista" + listar, httpUrlConnectionClient.getBookList(params[0].getString("url"), listar));
+                publishProgress();
                 break;
             case "insertar":
 

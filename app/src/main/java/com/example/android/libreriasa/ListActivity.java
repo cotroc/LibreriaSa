@@ -88,4 +88,5 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
         Adapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, resu);
         listaLibros.setAdapter((ListAdapter) adaptador);
     }
+
 }

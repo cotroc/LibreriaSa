@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,9 +20,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initComponents();
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        this.checkIp();
+    }
+
+/*    @Override
+    protected void onResume(){
+        super.onResume();
+        ip = this.getIp();
+        this.onStart();
+    }*/
 
     private void initComponents() {
         btnList = (Button) findViewById(R.id.btnList);
@@ -32,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void listActivity(View v) {
+        this.checkIp();
         intent = new Intent(this, ListActivity.class);
         intent.putExtra("ip", ip);
         startActivity(intent);
     }
 
     public void BookCrudActivity(View v) {
+        this.checkIp();
         intent = new Intent(this, BookCrudActivity.class);
         intent.putExtra("ip", ip);
         startActivity(intent);
@@ -57,6 +72,17 @@ public class MainActivity extends AppCompatActivity {
         }
         configSQLite.close();
         return ip;
+    }
 
+    public void checkIp() {
+        ip = this.getIp();
+        if(this.ip.matches("")) {
+            btnList.setEnabled(false);
+            btnNew.setEnabled(false);
+            Toast.makeText(this, "Configurar Servidor", Toast.LENGTH_SHORT).show();
+        } else {
+            btnList.setEnabled(true);
+            btnNew.setEnabled(true);
+        }
     }
 }

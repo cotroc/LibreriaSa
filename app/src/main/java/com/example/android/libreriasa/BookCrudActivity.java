@@ -1,5 +1,6 @@
 package com.example.android.libreriasa;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
     private final static String HTTP = "http://";
     private final static String BOOK = "/v1/libro/";
     private final static String CAT = "/v1/categoria/";
+    private ProgressDialog pDialog;
     private CatDto catDto;
     private BookDto bookDto;
 
@@ -33,6 +35,7 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertar);
+        pDialog = new ProgressDialog(this);
         Intent intent = getIntent();
         ip = intent.getStringExtra("ip");
         this.initComponents();
@@ -52,24 +55,24 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
     }
 
     private void getCat() {
-        AsyncRestClient asyncGetCategoria = new AsyncRestClient(this);
+        AsyncRestClient asyncGetCat = new AsyncRestClient(this);
         Bundle entrada = new Bundle();
         String url = HTTP + ip + CAT;
         entrada.putString("flag0", "listar");
         entrada.putString("flag1", "Cat");
         entrada.putString("url", url);
-        asyncGetCategoria.execute(entrada);
+        asyncGetCat.execute(entrada);
 
     }
 
     public void findById(View v) {
-        AsyncRestClient asyncBuscar = new AsyncRestClient(this);
+        AsyncRestClient asyncFind = new AsyncRestClient(this);
         Bundle b = new Bundle();
         String url = HTTP + ip + BOOK +
                 Integer.parseInt(etId.getText().toString());
         b.putString("flag0", "buscar");
         b.putString("url", url);
-        asyncBuscar.execute(b);
+        asyncFind.execute(b);
     }
 
     public void bookInsert(View v) {
@@ -84,7 +87,7 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
     }
 
     public void bookEditInsert(View v, String flag, Integer id){
-        AsyncRestClient asyncEditarLibro = new AsyncRestClient(this);
+        AsyncRestClient asyncEditInsert = new AsyncRestClient(this);
         Bundle entrada = new Bundle();
         String url = HTTP + ip + BOOK;
         bookDto = this.book();
@@ -92,17 +95,17 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
         entrada.putString("flag0", flag);
         entrada.putString("url", url);
         entrada.putString("book", Converter.toJson(bookDto).toString());
-        asyncEditarLibro.execute(entrada);
+        asyncEditInsert.execute(entrada);
     }
 
     public void bookDelete(View v) {
-        AsyncRestClient asyncEliminarLibro = new AsyncRestClient(this);
+        AsyncRestClient asyncDelete = new AsyncRestClient(this);
         Bundle entrada = new Bundle();
         String url = HTTP + ip + BOOK +
                 Integer.parseInt(etId.getText().toString());
         entrada.putString("flag0", "eliminar");
         entrada.putString("url", url);
-        asyncEliminarLibro.execute(entrada);
+        asyncDelete.execute(entrada);
     }
 
     public BookDto book() {
@@ -114,7 +117,7 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
         return bookDto;
     }
 
-    public void limpiar() {
+    public void clean() {
         etName.setText("");
         etCode.setText("");
         etCant.setText("");
@@ -177,8 +180,16 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
 
                 toast = Toast.makeText(this, output.getString("resultado"), Toast.LENGTH_SHORT);
                 toast.show();
-                this.limpiar();
+                this.clean();
                 break;
         }
     }
+
+    /*public void progressDialog(String message) {
+        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog.setMessage(message);
+        pDialog.setCancelable(true);
+        pDialog.setMax(100);
+        pDialog.show();
+    }*/
 }

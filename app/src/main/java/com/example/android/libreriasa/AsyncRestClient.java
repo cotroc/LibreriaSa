@@ -19,7 +19,7 @@ public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
 
     @Override
     protected Bundle doInBackground(Bundle... params) {
-        Bundle[] par = params;
+
         Bundle salida = new Bundle();
         String flag = params[0].getString("flag0");
         HttpUrlConnectionClient httpUrlConnectionClient;
@@ -31,7 +31,7 @@ public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
                 salida.putString("flag", "lista" + listar);
                 salida.putParcelableArrayList("lista" + listar, httpUrlConnectionClient.getBookList(params[0].getString("url"), listar));
-                publishProgress();
+                publishProgress(flag);
                 break;
             case "insertar":
 
@@ -41,6 +41,8 @@ public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
                 break;
 
             case "buscar":
+                publishProgress(flag);
+
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
                 salida.putString("flag", "buscar");
                 salida.putString("book", httpUrlConnectionClient.getBook(params[0].getString("url")));
@@ -65,9 +67,14 @@ public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
     }
 
     @Override
+    protected void onProgressUpdate(String... value){
+        simpleUpdatableActivity.progress(value[0]);
+    }
+    @Override
     protected void onPostExecute(Bundle result) {
         if (null != result) {
             simpleUpdatableActivity.update(result);
+
         }
     }
 }

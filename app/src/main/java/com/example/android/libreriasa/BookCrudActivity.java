@@ -148,6 +148,7 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
                     break;
 
             case "listaCat":
@@ -183,13 +184,16 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
                 this.clean();
                 break;
         }
+        pDialog.dismiss();
+
     }
 
-    /*public void progressDialog(String message) {
+    @Override
+    public void progress(String message) {
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.setMessage(message);
         pDialog.setCancelable(true);
         pDialog.setMax(100);
         pDialog.show();
-    }*/
+    }
 }

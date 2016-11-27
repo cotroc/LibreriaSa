@@ -89,4 +89,13 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
         listaLibros.setAdapter((ListAdapter) adaptador);
     }
 
+    @Override
+    public void progress(String message) {
+/*        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog.setMessage(message);
+        pDialog.setCancelable(true);
+        pDialog.setMax(100);
+        pDialog.show();*/
+    }
+
 }

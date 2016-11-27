@@ -85,4 +85,8 @@ public class MainActivity extends AppCompatActivity {
             btnNew.setEnabled(true);
         }
     }
+
+    public void quit() {
+        finish();
+    }
 }

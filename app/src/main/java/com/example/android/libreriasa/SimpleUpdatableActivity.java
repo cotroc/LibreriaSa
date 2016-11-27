@@ -10,4 +10,6 @@ public interface SimpleUpdatableActivity {
 
     void update(Bundle results);
 
+    void progress(String message);
+
 }

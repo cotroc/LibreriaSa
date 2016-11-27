@@ -10,10 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatableActivity{
@@ -29,7 +27,6 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
     private ProgressDialog pDialog;
     private CatDto catDto;
     private BookDto bookDto;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,142 +55,173 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
         AsyncRestClient asyncGetCat = new AsyncRestClient(this);
         Bundle entrada = new Bundle();
         String url = HTTP + ip + CAT;
-        entrada.putString("flag0", "listar");
+        entrada.putString("flag0", "Listar");
         entrada.putString("flag1", "Cat");
         entrada.putString("url", url);
         asyncGetCat.execute(entrada);
-
     }
 
     public void findById(View v) {
-        AsyncRestClient asyncFind = new AsyncRestClient(this);
-        Bundle b = new Bundle();
-        String url = HTTP + ip + BOOK +
-                Integer.parseInt(etId.getText().toString());
-        b.putString("flag0", "buscar");
-        b.putString("url", url);
-        asyncFind.execute(b);
+        if(this.existsId()) {
+            AsyncRestClient asyncFind = new AsyncRestClient(this);
+            Bundle b = new Bundle();
+            String url = HTTP + ip + BOOK + etId.getText().toString();
+            b.putString("flag0", "Buscar");
+            b.putString("url", url);
+            asyncFind.execute(b);
+        } else {
+            this.noIdMessage();
+        }
     }
 
     public void bookInsert(View v) {
-
-        this.bookEditInsert(v, "insertar", 0);
+        this.bookEditInsert(v, "Nuevo", 0);
     }
 
     public void bookEdit(View v) {
-
-        this.bookEditInsert(v, "editar",
-                Integer.parseInt(etId.getText().toString()));
+        if(this.existsId()) {
+            this.bookEditInsert(v, "Editar",
+                    Integer.parseInt(etId.getText().toString()));
+        } else {
+            this.noIdMessage();
+        }
     }
 
     public void bookEditInsert(View v, String flag, Integer id){
-        AsyncRestClient asyncEditInsert = new AsyncRestClient(this);
-        Bundle entrada = new Bundle();
-        String url = HTTP + ip + BOOK;
         bookDto = this.book();
-        bookDto.setId(id);
-        entrada.putString("flag0", flag);
-        entrada.putString("url", url);
-        entrada.putString("book", Converter.toJson(bookDto).toString());
-        asyncEditInsert.execute(entrada);
+        if(bookDto == null) {
+            Toast.makeText(this, "Faltan datos", Toast.LENGTH_SHORT).show();
+        } else {
+            AsyncRestClient asyncEditInsert = new AsyncRestClient(this);
+            Bundle entrada = new Bundle();
+            String url = HTTP + ip + BOOK;
+            bookDto.setId(id);
+            entrada.putString("flag0", flag);
+            entrada.putString("url", url);
+            entrada.putString("book", Converter.toJson(bookDto).toString());
+            asyncEditInsert.execute(entrada);
+        }
     }
 
     public void bookDelete(View v) {
-        AsyncRestClient asyncDelete = new AsyncRestClient(this);
-        Bundle entrada = new Bundle();
-        String url = HTTP + ip + BOOK +
-                Integer.parseInt(etId.getText().toString());
-        entrada.putString("flag0", "eliminar");
-        entrada.putString("url", url);
-        asyncDelete.execute(entrada);
-    }
-
-    public BookDto book() {
-        bookDto = new BookDto();
-        bookDto.setName(etName.getText().toString());
-        bookDto.setCant(Integer.parseInt(etCant.getText().toString()));
-        bookDto.setCod(etCode.getText().toString());
-        bookDto.setCatDto(catDto);
-        return bookDto;
-    }
-
-    public void clean() {
-        etName.setText("");
-        etCode.setText("");
-        etCant.setText("");
-        etId.setText("");
-        spnCat.setSelection(0);
+        if(existsId()) {
+            AsyncRestClient asyncDelete = new AsyncRestClient(this);
+            Bundle entrada = new Bundle();
+            String url = HTTP + ip + BOOK +
+                    Integer.parseInt(etId.getText().toString());
+            entrada.putString("flag0", "Eliminar");
+            entrada.putString("url", url);
+            asyncDelete.execute(entrada);
+        } else {
+            this.noIdMessage();
+        }
     }
 
     @Override
     public void update(Bundle output) {
-        Toast toast;
         String flag = output.getString("flag");
         switch(flag) {
-
             case "buscar":
-
-                try {
-                    JSONObject jsonLibro = new JSONObject(output.getString("book"));
-                    BookDto libro = Converter.toLibro(jsonLibro);
-                    if(libro.getName() == null) {
-                        Toast.makeText(this, "No existe el Libro", Toast.LENGTH_SHORT).show();
-                    } else {
-                        etName.setText(libro.getName());
-                        etCant.setText(Integer.toString(libro.getCant()));
-                        etCode.setText(libro.getCod());
-                        etId.setText(Integer.toString(libro.getId()));
-                        spnCat.setSelection(libro.getCatDto().getId()-1);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                    break;
-
+                this.resolveBuscar(output);
+                break;
             case "listaCat":
-
-                ArrayList cat = output.getStringArrayList("listaCat");
-                int size = cat.size();
-                final CatDto[] lCat = new CatDto[size];
-                for(int i = 0; i < cat.size(); i++) {
-                    CatDto cate = (CatDto) cat.get(i);
-                    lCat[i] = cate;
-                }
-                adapter = new SpinnAdapter(this, android.R.layout.simple_spinner_item, lCat);
-                spnCat = (Spinner) findViewById(R.id.spnCat);
-                spnCat.setAdapter(adapter);
-                spnCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view,
-                                               int position, long id) {
-                        CatDto catDto = adapter.getItem(position);
-                        BookCrudActivity.this.catDto = new CatDto();
-                        BookCrudActivity.this.catDto.setId(catDto.getId());
-                        BookCrudActivity.this.catDto.setName(catDto.getName());
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapter) {  }
-                });
+                this.resolveListCat(output);
                 break;
             case "insertado": case "eliminar":
-
-                toast = Toast.makeText(this, output.getString("resultado"), Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(this, output.getString("resultado"), Toast.LENGTH_SHORT).show();
                 this.clean();
                 break;
         }
         pDialog.dismiss();
+    }
 
+    private void resolveBuscar(Bundle output) {
+        try {
+            JSONObject jsonLibro = new JSONObject(output.getString("book"));
+            BookDto libro = Converter.toLibro(jsonLibro);
+            if(libro.getName() == null) {
+                Toast.makeText(this, "No existe el Libro", Toast.LENGTH_SHORT).show();
+            } else {
+                etId.setEnabled(false);
+                etName.setText(libro.getName());
+                etCant.setText(Integer.toString(libro.getCant()));
+                etCode.setText(libro.getCod());
+                etId.setText(Integer.toString(libro.getId()));
+                spnCat.setSelection(libro.getCatDto().getId()-1);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resolveListCat(Bundle output){
+        ArrayList cat = output.getStringArrayList("listaCat");
+        int size = cat.size();
+        final CatDto[] lCat = new CatDto[size];
+        for(int i = 0; i < cat.size(); i++) {
+            CatDto cate = (CatDto) cat.get(i);
+            lCat[i] = cate;
+        }
+        adapter = new SpinnAdapter(this, android.R.layout.simple_spinner_item, lCat);
+        spnCat = (Spinner) findViewById(R.id.spnCat);
+        spnCat.setAdapter(adapter);
+        spnCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                CatDto catDto = adapter.getItem(position);
+                BookCrudActivity.this.catDto = new CatDto();
+                BookCrudActivity.this.catDto.setId(catDto.getId());
+                BookCrudActivity.this.catDto.setName(catDto.getName());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
     }
 
     @Override
     public void progress(String message) {
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog.setTitle("Procesando");
         pDialog.setMessage(message);
         pDialog.setCancelable(true);
         pDialog.setMax(100);
         pDialog.show();
+    }
+
+    private BookDto book() {
+        String name = etName.getText().toString();
+        String  cant = etCant.getText().toString();
+        String cod = etCode.getText().toString();
+
+        if(!name.isEmpty() && !cant.isEmpty() && !cod.isEmpty()) {
+            bookDto = new BookDto();
+            bookDto.setName(name);
+            bookDto.setCant(Integer.parseInt(cant));
+            bookDto.setCod(cod);
+            bookDto.setCatDto(catDto);
+        }
+        return bookDto;
+    }
+
+    private void clean() {
+        etName.setText("");
+        etCode.setText("");
+        etCant.setText("");
+        etId.setEnabled(true);
+        etId.setText("");
+        spnCat.setSelection(0);
+    }
+
+    private boolean existsId(){
+        boolean id = true;
+            if(etId.getText().toString().isEmpty())
+                id = false;
+        return id;
+    }
+
+    private void noIdMessage(){
+        Toast.makeText(this, "Falta id", Toast.LENGTH_SHORT).show();
     }
 }

@@ -46,12 +46,12 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
         String url = HTTP + ip + BOOK;
 
         if(id.isEmpty()) {
-            b.putString("flag0", "listar");
+            b.putString("flag0", "Listar");
             b.putString("flag1", "Libros");
             b.putString("url", url);
             asyncRestClient.execute(b);
         } else {
-            b.putString("flag0", "buscar");
+            b.putString("flag0", "Buscar");
             b.putString("url", url + id);
             asyncRestClient.execute(b);
         }

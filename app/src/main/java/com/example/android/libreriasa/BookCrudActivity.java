@@ -32,7 +32,6 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertar);
-        pDialog = new ProgressDialog(this);
         Intent intent = getIntent();
         ip = intent.getStringExtra("ip");
         this.initComponents();
@@ -140,7 +139,7 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
             JSONObject jsonLibro = new JSONObject(output.getString("book"));
             BookDto libro = Converter.toLibro(jsonLibro);
             if(libro.getName() == null) {
-                Toast.makeText(this, "No existe el Libro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No existe Libro", Toast.LENGTH_SHORT).show();
             } else {
                 etId.setEnabled(false);
                 etName.setText(libro.getName());
@@ -182,6 +181,7 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
 
     @Override
     public void progress(String message) {
+        pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.setTitle("Procesando");
         pDialog.setMessage(message);

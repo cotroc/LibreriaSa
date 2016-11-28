@@ -17,53 +17,69 @@ public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
         this.simpleUpdatableActivity = simpleUpdatableActivity;
     }
 
+    /*
+
+     */
     @Override
     protected Bundle doInBackground(Bundle... params) {
 
-        Bundle salida = new Bundle();
+        Bundle output = new Bundle();
         String flag = params[0].getString("flag0");
+        String list = params[0].getString("flag1");
         HttpUrlConnectionClient httpUrlConnectionClient;
+
+        /*
+        Este chequeo me evita tener que llamar
+        el metodo publishProgress(flag) en
+        cada case del Switch
+         */
+        if(list == null || ( list != null && list.matches("Libros") )) {
+            publishProgress(flag);
+        }
+
         switch (flag) {
             case "Listar":
-                String listar = params[0].getString("flag1");
-                Log.i(TAG, "Iniciando llamada al servidor para: " + flag + listar);
-                httpUrlConnectionClient = new HttpUrlConnectionClient();
-                salida.putString("flag", "lista" + listar);
-                salida.putParcelableArrayList("lista" + listar, httpUrlConnectionClient.getBookList(params[0].getString("url"), listar));
+
+                /*
                 if(listar.matches("Libros")){
-                    publishProgress(flag);
+                publishProgress(flag);
                 }
+                */
+                Log.i(TAG, "Iniciando llamada al servidor para: " + flag + list);
+                httpUrlConnectionClient = new HttpUrlConnectionClient();
+                output.putString("flag", "lista" + list);
+                output.putParcelableArrayList("lista" + list, httpUrlConnectionClient.getBookList(params[0].getString("url"), list));
 
                 break;
             case "Nuevo":
-                publishProgress(flag);
+                //publishProgress(flag);
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
-                salida.putString("flag", "insertado");
-                salida.putString("resultado", httpUrlConnectionClient.sendPost(params[0].getString("url"), params[0].getString("book")));
+                output.putString("flag", "insertado");
+                output.putString("resultado", httpUrlConnectionClient.sendPost(params[0].getString("url"), params[0].getString("book")));
                 break;
 
             case "Buscar":
-                publishProgress(flag);
+                //publishProgress(flag);
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
-                salida.putString("flag", "buscar");
-                salida.putString("book", httpUrlConnectionClient.getBook(params[0].getString("url")));
+                output.putString("flag", "buscar");
+                output.putString("book", httpUrlConnectionClient.getBook(params[0].getString("url")));
                 break;
 
             case "Editar":
-                publishProgress(flag);
+                //publishProgress(flag);
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
-                salida.putString("flag", "insertado");
-                salida.putString("resultado", httpUrlConnectionClient.sendUpdate(params[0].getString("url"), params[0].getString("book")));
+                output.putString("flag", "insertado");
+                output.putString("resultado", httpUrlConnectionClient.sendUpdate(params[0].getString("url"), params[0].getString("book")));
                 break;
 
             case "Eliminar":
-                publishProgress(flag);
+                //publishProgress(flag);
                 httpUrlConnectionClient = new HttpUrlConnectionClient();
-                salida.putString("flag", "eliminar");
-                salida.putString("resultado", httpUrlConnectionClient.sendDelete(params[0].getString("url")));
+                output.putString("flag", "eliminar");
+                output.putString("resultado", httpUrlConnectionClient.sendDelete(params[0].getString("url")));
                 break;
         }
-        return salida;
+        return output;
 
     }
 
@@ -71,11 +87,11 @@ public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
     protected void onProgressUpdate(String... value){
         simpleUpdatableActivity.progress(value[0]);
     }
+
     @Override
     protected void onPostExecute(Bundle result) {
         if (null != result) {
             simpleUpdatableActivity.update(result);
-
         }
     }
 }

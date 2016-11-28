@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnList"
             android:text="Listar / Buscar"
-            android:onClick="listarLibros"/>
+            android:onClick="bookList"/>
 
     </LinearLayout>
 

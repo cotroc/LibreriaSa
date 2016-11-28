@@ -1,5 +1,6 @@
 package com.example.android.libreriasa;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +25,7 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
     public Button listar;
     public EditText etBuscar;
     private String ip;
+    private ProgressDialog pDialog;
     private final static String HTTP = "http://";
     private final static String BOOK = "/v1/libro/";
     private final static String CAT = "/v1/categoria/";
@@ -38,7 +41,7 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
         this.initComponents();
     }
 
-    public void listarLibros(View v) {
+    public void bookList(View v) {
         Log.i(TAG, "Enviando peticion");
         Bundle b = new Bundle();
         asyncRestClient = new AsyncRestClient(this);
@@ -73,29 +76,43 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
             ArrayList results = b.getStringArrayList("listaLibros");
             for(int i = 0; i < results.size(); i ++) {
                 libro = (BookDto)results.get(i);
-                resu.add("ID: "+ libro.getId() + "\n Nombre: " + libro.getName() + "\n Codigo: " + libro.getCod() + "\n Cantidad: " + libro.getCant() + "\n\n");
+                resu.add("ID: "+ libro.getId() + "\n Nombre: " + libro.getName() +
+                        "\n Codigo: " + libro.getCod() + "\n Cantidad: " + libro.getCant() +
+                        "\n Categoria: " + libro.getCatDto().getName() + "\n\n");
 
             }
         } if(flag.matches("buscar")) {
             try {
                 JSONObject jsonLibro = new JSONObject(b.getString("book"));
-                libro = Converter.toLibro(jsonLibro);
-                resu.add("Nombre: " + libro.getName() + " Codigo: " + libro.getCod() + " Cantidad: " + libro.getCant());
+                int  length = jsonLibro.length();
+                if(!jsonLibro.isNull("nombre")) {
+                    libro = Converter.toLibro(jsonLibro);
+                    resu.add("ID: "+ libro.getId() + "\n Nombre: " + libro.getName() +
+                            "\n Codigo: " + libro.getCod() + "\n Cantidad: " + libro.getCant() +
+                            "\n Categoria: " + libro.getCatDto().getName() + "\n\n");
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        Adapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, resu);
-        listaLibros.setAdapter((ListAdapter) adaptador);
+        if(resu.size() != 0){
+            Adapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, resu);
+            listaLibros.setAdapter((ListAdapter) adaptador);
+        } else {
+            Toast.makeText(this, "No existe Libro", Toast.LENGTH_SHORT).show();
+        }
+       //pDialog.dismiss();
     }
 
     @Override
     public void progress(String message) {
-/*        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog = new ProgressDialog(this);
+        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog.setTitle("Procesando");
         pDialog.setMessage(message);
         pDialog.setCancelable(true);
         pDialog.setMax(100);
-        pDialog.show();*/
+        pDialog.show();
     }
 
 }

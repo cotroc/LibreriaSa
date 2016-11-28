@@ -33,7 +33,7 @@ public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
         el metodo publishProgress(flag) en
         cada case del Switch
          */
-        if(list == null || ( list != null && list.matches("Libros") )) {
+        if(list == null || ( list.matches("Libros") )) {
             publishProgress(flag);
         }
 

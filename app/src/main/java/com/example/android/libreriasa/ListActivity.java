@@ -101,7 +101,7 @@ public class ListActivity extends AppCompatActivity implements SimpleUpdatableAc
         } else {
             Toast.makeText(this, "No existe Libro", Toast.LENGTH_SHORT).show();
         }
-       //pDialog.dismiss();
+       pDialog.dismiss();
     }
 
     @Override

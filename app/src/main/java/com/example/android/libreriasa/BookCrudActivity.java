@@ -131,7 +131,9 @@ public class BookCrudActivity extends AppCompatActivity implements SimpleUpdatab
                 this.clean();
                 break;
         }
-        pDialog.dismiss();
+        if(!flag.matches("listaCat")) {
+            pDialog.dismiss();
+        }
     }
 
     private void resolveBuscar(Bundle output) {

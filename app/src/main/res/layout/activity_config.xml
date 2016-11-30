@@ -6,81 +6,135 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:background="@drawable/config"
     tools:context="com.example.android.libreriasa.MainActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:padding="8dp">
 
         <TextView
-            android:id="@+id/tvService"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="Servicio" />
-
-        <EditText
-            android:id="@+id/etService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="140dp"
-            android:inputType="text" />
+            android:id="@+id/tvConfig"
+            android:text="Cnfiguracion"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvIp"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="IP" />
-
-        <EditText
-            android:id="@+id/etIp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="140dp"
-            android:inputType="text" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnGuardar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:onClick="guardar"
-        android:text="Guardar" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="save"
+                android:text="Guardar" />
 
             <Button
                 android:id="@+id/btnServicios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="listar"
-                android:text="Listar" />
+                android:onClick="listServer"
+                android:text="Mostrar" />
 
             <Button
-                android:id="@+id/btnLimpiar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="limpiar"
-                android:text="Limpiar"/>
+                android:onClick="eraseDb"
+                android:text="Borrar"
+                android:id="@+id/btnErase" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvService"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Servicio " />
+
+            <EditText
+                android:id="@+id/etService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="140dp"
+                android:inputType="text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvIp"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Ip:Puerto " />
+
+            <EditText
+                android:id="@+id/etIp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="140dp"
+                android:inputType="text" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Servidores" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF">
 
         <ListView
             android:id="@+id/lvLista"

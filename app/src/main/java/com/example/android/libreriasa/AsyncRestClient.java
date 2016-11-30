@@ -41,7 +41,7 @@ public class AsyncRestClient extends AsyncTask<Bundle, String, Bundle> {
             case "Listar":
 
                 /*
-                if(listar.matches("Libros")){
+                if(listServer.matches("Libros")){
                 publishProgress(flag);
                 }
                 */

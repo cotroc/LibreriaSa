@@ -20,7 +20,6 @@
         <activity android:name=".ConfigActivity" />
         <activity android:name=".ListActivity" />
         <activity android:name=".BookCrudActivity" />
-        <activity android:name=".BookListActivity"></activity>
     </application>
 
 </manifest>

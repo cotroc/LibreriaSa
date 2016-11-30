@@ -11,14 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class ConfigActivity extends AppCompatActivity {
 
-    public Button btnGuardar, btnSerivcios, btnLimpiar;
+    public Button btnSave, btnServices, btnErase;
     public EditText etService, etIp;
-    public ListView lvLista;
+    public ListView lvList;
     public ConfigSQLite configSQLite;
     public SQLiteDatabase db;
 
@@ -30,19 +31,23 @@ public class ConfigActivity extends AppCompatActivity {
 
     }
 
-    public void guardar(View v) {
-        configSQLite = new ConfigSQLite(this, "DataBase.sql", null, 1);
-        String service = etService.getText().toString();
-        String ip = etIp.getText().toString();
-        configSQLite.insertar(service, ip);
-
-
+    public void save(View v) {
+        if(etIp.getText().toString().isEmpty()) {
+            this.message("Falta Ip");
+        } else {
+            configSQLite = new ConfigSQLite(this, "DataBase.sql", null, 1);
+            String service = etService.getText().toString();
+            String ip = etIp.getText().toString();
+            configSQLite.insertar(service, ip);
+            this.clean();
+            this.message("Configuracion guardada");
+        }
     }
 
-    public void listar(View v) {
+    public void listServer(View v) {
         configSQLite = new ConfigSQLite(this, "DataBase.sql", null, 1);
         Cursor c = configSQLite.selectAll();
-        ArrayList<ArrayList> lista = new ArrayList();
+        ArrayList<ArrayList> list = new ArrayList();
         if(c.moveToFirst()) {
             do {
                 ArrayList<String> servicio = new ArrayList();
@@ -50,28 +55,38 @@ public class ConfigActivity extends AppCompatActivity {
                 servicio.add(1, c.getString(1));
                 servicio.add(2, c.getString(2));
 
-                lista.add(servicio);
+                list.add(servicio);
 
             } while (c.moveToNext());
         }
         configSQLite.close();
-        Adapter adaptador = new ArrayAdapter(ConfigActivity.this, android.R.layout.simple_list_item_1, lista);
-        lvLista.setAdapter((ListAdapter) adaptador);
+        Adapter adapter = new ArrayAdapter(ConfigActivity.this, android.R.layout.simple_list_item_1, list);
+        lvList.setAdapter((ListAdapter) adapter);
 
     }
 
-    public void limpiar(View v) {
+    public void eraseDb(View v) {
         configSQLite = new ConfigSQLite(this, "DataBase.sql", null, 1);
         configSQLite.deleteAll();
+        this.clean();
     }
 
     public void initComponents() {
-        btnGuardar = (Button) findViewById(R.id.btnGuardar);
-        btnSerivcios = (Button) findViewById(R.id.btnServicios);
-        btnLimpiar = (Button) findViewById(R.id.btnLimpiar);
+        btnSave = (Button) findViewById(R.id.btnGuardar);
+        btnServices = (Button) findViewById(R.id.btnServicios);
+        btnErase = (Button) findViewById(R.id.btnErase);
         etService = (EditText) findViewById(R.id.etService);
         etIp = (EditText) findViewById(R.id.etIp);
-        lvLista = (ListView) findViewById(R.id.lvLista);
+        lvList = (ListView) findViewById(R.id.lvLista);
     }
 
+    private void clean(){
+        etService.setText("");
+        etIp.setText("");
+        lvList.setAdapter(null);
+    }
+
+    private void message(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -4,43 +4,76 @@
     android:id="@+id/activity_listar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/list"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="com.example.android.libreriasa.ListActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID: "/>
+            android:text="Listado de Libros"
+            android:textStyle="bold"/>
 
-        <EditText
-            android:id="@+id/etBuscar"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content" />
 
-        <Button
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnList"
-            android:text="Listar / Buscar"
-            android:onClick="bookList"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: "/>
+
+            <EditText
+                android:id="@+id/etBuscar"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="bookList"
+                android:text="Listar / Buscar"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
 
-    <GridView
-        android:id="@+id/listaLibros"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
-    </GridView>
+        <GridView
+            android:id="@+id/listaLibros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </GridView>
+
+    </LinearLayout>
 
 </LinearLayout>

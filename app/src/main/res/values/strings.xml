@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">LibreriaSa</string>
+    <string name="app_name">Libreria Sa</string>
+    <string name="hd_activity_insertar">ABM Libro</string>
+    <string name="hd_activity_config">Cnfiguracion</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_find">Buscar</string>
+    <string name="btn_delete">Borrar</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_show">Mostrar</string>
+    <string name="btn_list">Listar</string>
+    <string name="btn_abmLibro">ABM Libro</string>
+    <string name="btn_quit">Salir</string>
+    <string name="btn_config">Configurar</string>
+
 </resources>

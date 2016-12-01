@@ -10,17 +10,13 @@
     tools:context="com.example.android.libreriasa.BookCrudActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
-        android:padding="8dp">
+        style="@style/Head"
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ABM Libro" />
+            android:text="@string/hd_activity_insertar" />
 
     </LinearLayout>
 
@@ -33,36 +29,35 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnInsertar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="bookInsert"
-                android:text="Guardar"/>
+                android:text="@string/btn_save"/>
 
             <Button
                 android:id="@+id/btnBuscar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="findById"
-                android:text="Buscar"/>
+                android:text="@string/btn_find"/>
 
             <Button
                 android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="bookEdit"
-                android:text="Editar"/>
+                android:text="@string/btn_edit"/>
 
             <Button
                 android:id="@+id/btnDel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="bookDelete"
-                android:text="Borrar"/>
+                android:text="@string/btn_delete"/>
 
         </LinearLayout>
 

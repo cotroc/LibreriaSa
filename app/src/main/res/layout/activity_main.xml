@@ -10,13 +10,7 @@
     tools:context="com.example.android.libreriasa.MainActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
-        android:orientation="vertical"
-        android:padding="8dp">
+        style="@style/Head">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,10 +21,9 @@
     </LinearLayout>
 
     <LinearLayout
+        style="@style/ContainerBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btnList"
@@ -38,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:onClick="listActivity"
-            android:text="Listar" />
+            android:text="@string/btn_list" />
 
         <Button
             android:id="@+id/btnNew"
@@ -46,15 +39,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:onClick="BookCrudActivity"
-            android:text="ABM Libro" />
+            android:text="@string/btn_abmLibro" />
 
     </LinearLayout>
 
     <LinearLayout
+        style="@style/ContainerBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btnConfig"
@@ -62,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:onClick="configActivity"
-            android:text="Configurar" />
+            android:text="@string/btn_config" />
 
         <Button
             android:id="@+id/btnQuit"
@@ -70,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:onClick="quit"
-            android:text="Salir" />
+            android:text="@string/btn_quit" />
 
     </LinearLayout>
 

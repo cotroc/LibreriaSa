@@ -8,4 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Head">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="ContainerBtn">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="ContainerGrp">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
 </resources>

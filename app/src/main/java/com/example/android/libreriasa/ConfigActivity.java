@@ -9,8 +9,8 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class ConfigActivity extends AppCompatActivity {
 
     public Button btnSave, btnServices, btnErase;
     public EditText etService, etIp;
-    public ListView lvList;
+    public GridView lvList;
     public ConfigSQLite configSQLite;
     public SQLiteDatabase db;
 
@@ -77,7 +77,7 @@ public class ConfigActivity extends AppCompatActivity {
         btnErase = (Button) findViewById(R.id.btnErase);
         etService = (EditText) findViewById(R.id.etService);
         etIp = (EditText) findViewById(R.id.etIp);
-        lvList = (ListView) findViewById(R.id.lvLista);
+        lvList = (GridView) findViewById(R.id.lvLista);
     }
 
     private void clean(){

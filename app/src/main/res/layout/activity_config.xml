@@ -136,7 +136,7 @@
         android:orientation="horizontal"
         android:background="#FFFFFF">
 
-        <ListView
+        <GridView
             android:id="@+id/lvLista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
